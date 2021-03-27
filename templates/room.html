@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script  src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form id="messageForm">
+        <textarea id="message"></textarea>
+        <button type="button" id="button">Send Message</button>
+    </form>
+    <script>
+        window.onload = e => {
+            $("#messageForm").submit(e => {
+                e.preventDefault();
+            })
+
+            var socket = io.connect(location.protocol + "//" + document.domain + ":" + location.port)
+
+            socket.on("connect", () => {
+                var button = document.getElementById("button")
+                button.onclick = () => {
+                    var message = document.getElementById("message").value;
+                    document.getElementById("message").value = " "
+                    socket.emit("broadcast message", {message: message}) // , room_id: room_id
+                }
+            })
+
+            socket.on("show message", data => {
+                console.log(data["message"])
+            })
+        }
+    </script>
+</body>
+</html>
