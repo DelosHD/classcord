@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, emit
 import sqlite3
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import mail
-#import boto3
+import boto3
 import os
 conn = sqlite3.connect("db.sqlite3", check_same_thread=False)
 c = conn.cursor()
@@ -89,6 +89,8 @@ def verify():
 @socketio.on("broadcast message")
 def message_display(data):
     print(data)
+    c.execute("INSERT INTO messages (message) VALUES (:message)",{"message": data["message"]})
+    conn.commit()
     emit("show message", {"message": data["message"]}, broadcast=True)
 
 
