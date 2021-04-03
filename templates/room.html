@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-   <div>
+   <div class="container">
        {% for m in messages %} 
             <span>{{ m[1] }}</span><br>
        {% endfor %}
@@ -46,7 +46,7 @@
             socket.on("show message", data => {
                 var message=document.createElement("span")
                 message.innerHTML=`<p> ${data.message}</p>`
-                $(".container").append(message)
+                $("#messages").append(message)
             })
         }
     </script>
