@@ -9,7 +9,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-   <div class="container" id="messages"></div>
+   <div>
+       {% for m in messages %} 
+            <span>{{ m[1] }}</span><br>
+       {% endfor %}
+   </div>
+    <div class="container" id="messages"></div>
     <form id="messageForm">
         <textarea id="message"></textarea>
         <button type="button" id="button">Send Message</button>
@@ -27,8 +32,14 @@
                 button.onclick = () => {
                     var message = document.getElementById("message").value;
                     console.log(message)
-                    document.getElementById("message").value = " "
-                    socket.emit("broadcast message", {"message": message}) // , room_id: room_id
+                    if (message.trim() === "" ) {
+                        alert("you cannot send an empty message")
+                    }
+                    else{
+                        document.getElementById("message").value = " "
+                        socket.emit("broadcast message", {"message": message}) // , room_id: room_id
+                    }
+                    
                 }
             })
 
