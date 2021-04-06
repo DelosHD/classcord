@@ -5,9 +5,16 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import mail
 #import boto3
 import os
-conn = sqlite3.connect("db.sqlite3", check_same_thread=False)
-c = conn.cursor()
-
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session,sessionmaker
+if not os.getenv("DATABASE_URL"): 
+    conn = sqlite3.connect("db.sqlite3", check_same_thread=False)
+    c = conn.cursor()
+else:
+    engine=create_engine(os.getenv("DATABASE_URL"))
+    db=scoped_session(sessionmaker(bind=engine))
+    conn=db()
+    c=conn
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secretkey"
 socketio = SocketIO(app)
