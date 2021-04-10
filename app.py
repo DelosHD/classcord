@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_socketio import SocketIO, emit
 import sqlite3
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -61,7 +61,7 @@ def login():
         user = c.execute("SELECT * FROM users where email=:email", {"email": email}).fetchall()
     
         if len(user) == 0:
-            return "Incorrect credentials"
+            return "Incorrect credentialees"
     
     
         if not check_password_hash(user[0][2], password):
