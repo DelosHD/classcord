@@ -23,8 +23,9 @@ socketio = SocketIO(app)
 
 @app.route("/")
 def index():
+    email = c.execute("SELECT * FROM users WHERE user_id=:user_id”, {'user_id': session.get('user_id')}).fetchall()[0][0]
     messages=c.execute("SELECT * FROM messages").fetchall()
-    return render_template("room.html",messages=messages)
+    return render_template('room.html',messages=messages, email=email)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -61,11 +62,11 @@ def login():
         user = c.execute("SELECT * FROM users where email=:email", {"email": email}).fetchall()
     
         if len(user) == 0:
-            return "Incorrect credentialees"
+            return "Incorrect credentials, Please try again."
     
     
         if not check_password_hash(user[0][2], password):
-            return "Incorrect credentials"
+            return "Incorrect credentials, Please try again."
         
         session["user_id"] = user[0][0]
     
