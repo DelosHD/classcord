@@ -23,7 +23,6 @@ socketio = SocketIO(app)
 
 @app.route("/")
 def index():
-    email = c.execute("SELECT * FROM users WHERE user_id=:user_id", {"user_id": session.get("user_id")}).fetchall()[0][0]
     messages=c.execute("SELECT * FROM messages").fetchall()
     return render_template('room.html',messages=messages, email=email)
 
@@ -100,8 +99,7 @@ def message_display(data):
     print(data)
     c.execute("INSERT INTO messages (message) VALUES (:message)",{"message": data["message"]})
     conn.commit()
-    emit('show message', {'message': data['message'], 'email': data['message']}, broadcast=True)
-
+    emit('show message', {'message': data['message'], 'email': data['email']}, broadcast=True)
 
 @app.route("/upload", methods =["GET", "POST"])
 def upload():
