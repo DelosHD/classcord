@@ -24,7 +24,7 @@ socketio = SocketIO(app)
 @app.route("/")
 def index():
     messages=c.execute("SELECT * FROM messages").fetchall()
-    return render_template('room.html',messages=messages])
+    return render_template('room.html',messages=messages)
 
 
 @app.route("/register", methods=["GET", "POST"])
