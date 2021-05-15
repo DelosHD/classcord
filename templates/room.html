@@ -37,7 +37,7 @@
                     }
                     else {
                         document.getElementById("message").value = " "
-                        socket.emit('broadcast message', {'message': message, 'email': '{{ session.get('user_id') }}'})
+                        socket.emit('broadcast message', {'message': message, 'email': '{{ session.get("user_id") }}'})
 
                     }
                     
@@ -46,7 +46,7 @@
 
             socket.on("show message", data => {
                 var message=document.createElement("span")
-               message.innerHTML='<p> ${data.email}: ${data.message}</p>``
+               message.innerHTML=`<p> ${data.email}: ${data.message}</p>`
                 $("#messages").append(message)
             })
         }
