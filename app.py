@@ -97,7 +97,7 @@ def verify():
 @socketio.on("broadcast message")
 def message_display(data):
     print(data)
-    c.execute("INSERT INTO messages (message) VALUES (:message)",{"message": data["message"]})
+    c.execute('INSERT INTO messages (message, email) VALUES (:message, :email)',{'message': data['message'], 'email': session.get('user_id')})
     conn.commit()
     emit('show message', {'message': data['message'], 'email': data['email']}, broadcast=True)
 
