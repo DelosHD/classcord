@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session
 from flask_socketio import SocketIO, emit
 import sqlite3
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import mail
+from helpers import mail, login_required
 #import boto3
 import os
 from sqlalchemy import create_engine
@@ -20,11 +20,11 @@ app.config["SECRET_KEY"] = "secretkey"
 socketio = SocketIO(app)
 
 #S3=boto3.resource("s3", aws_access_key_id=os.getenv("S3_ACCESS_KEY_ID"), aws_secret_access_key=os.getenv("S3_SECRET_ACCESS_KEY_ID"))
-
+@login_required
 @app.route("/")
 def index():
     messages=c.execute("SELECT * FROM messages").fetchall()
-    return render_template('room.html',messages=messages, email=email)
+    return render_template('room.html',messages=messages, email=session['user_id'])
 
 
 @app.route("/register", methods=["GET", "POST"])
