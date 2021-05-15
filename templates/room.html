@@ -37,7 +37,8 @@
                     }
                     else {
                         document.getElementById("message").value = " "
-                        socket.emit("broadcast message", {"message": message, “email”: “{{ email }}”})
+                        socket.emit('broadcast message', {'message': message, 'email': '{{ session.get('user_id') }}'})
+
                     }
                     
                 }
