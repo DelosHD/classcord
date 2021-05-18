@@ -23,6 +23,11 @@ socketio = SocketIO(app)
 @login_required
 @app.route("/")
 def index():
+    try:
+        session["user_id"]
+    except:
+        return redirect("/login")
+        
     messages=c.execute("SELECT * FROM messages").fetchall()
     return render_template('room.html',messages=messages)
 
