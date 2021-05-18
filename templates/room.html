@@ -33,8 +33,7 @@
    <div class='container'>
        {% for m in messages %} 
             <div class='speech-bubble'>
-  <div class='arrow bottom right'></div>
-  {{ m[2] }}: {{ m[1] }}
+  <div class='arrow bottom right'> {{ m[2] }}: {{ m[1] }}</div>
 </div>
             
        {% endfor %}
