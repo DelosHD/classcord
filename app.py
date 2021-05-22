@@ -26,7 +26,7 @@ def index():
     try:
         session["user_id"]
     except:
-        return redirect("/login")
+        return redirect("/login?next=/")
         
     messages=c.execute("SELECT * FROM messages").fetchall()
     return render_template('room.html',messages=messages)
@@ -73,6 +73,9 @@ def login():
             return "Incorrect credentials, Please try again."
         
         session["user_id"] = user[0][0]
+    
+        if request.args.get("next"):
+            return render_template("redirect.html", next=request.args.get("next"))
     
         return "Logged in successfully!"
     
