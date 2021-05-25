@@ -29,7 +29,7 @@ def index():
         return redirect("/login?next=/")
         
     messages=c.execute("SELECT * FROM messages").fetchall()
-    return render_template('room.html',messages=messages)
+    return render_template('room.html',messages=messages[::-1])
 
 
 @app.route("/register", methods=["GET", "POST"])
