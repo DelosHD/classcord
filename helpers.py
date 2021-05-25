@@ -36,3 +36,10 @@ def login_required(f):
             return redirect('/login')
         return f(*args, **kwargs)
     return decorated_function
+import random
+import string
+def random_str(digit=7):
+    answer="" 
+    for i in range(digit):
+        answer += random.choice(string.ascii_letters + string.digits)
+    return answer
