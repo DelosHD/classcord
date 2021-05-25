@@ -72,7 +72,7 @@
 
             socket.on("show message", data => {
                 var message=document.createElement("span")
-               message.innerHTML=`<p> ${data.email}: ${data.message}</p>`
+               message.innerHTML= `<hgroup class='speech-bubble'>${data.email}: ${data.message}</hgroup>`
                 $("#messages").append(message)
             })
         }
