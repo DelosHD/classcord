@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, redirect
 from flask_socketio import SocketIO, emit
 import sqlite3
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import mail, login_required
+from helpers import mail, login_required, random_str
 #import boto3
 import os
 from sqlalchemy import create_engine
@@ -92,7 +92,8 @@ def logout():
 @app.route("/create-room", methods=["GET", "POST"])
 def create_room():
     if request.method == "POST":
-        pass
+        room_id=random_str()
+        c.execute('INSERT INTO rooms (room_id, name, status) VALUES (:r_id, :name, :status)', {'r_id': room_id, 'name': request.form.get('name'), 'statuS': request.form.get('status')})
     return render_template("create-room.html")
 
 
