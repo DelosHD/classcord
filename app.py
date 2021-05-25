@@ -93,6 +93,7 @@ def logout():
 def create_room():
     if request.method == "POST":
         pass
+    return render_template("create-room.html")
 
 
 
