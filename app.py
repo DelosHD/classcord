@@ -93,7 +93,8 @@ def logout():
 def create_room():
     if request.method == "POST":
         room_id=random_str()
-        c.execute('INSERT INTO rooms (room_id, name, status) VALUES (:r_id, :name, :status)', {'r_id': room_id, 'name': request.form.get('name'), 'statuS': request.form.get('status')})
+        c.execute('INSERT INTO rooms (room_id, name, status) VALUES (:r_id, :name, :status)', {'r_id': room_id, 'name': request.form.get('name'), 'status': request.form.get('status')})
+        conn.commit()
     return render_template("create-room.html")
 
 
